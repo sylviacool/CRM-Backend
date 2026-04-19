@@ -1,10 +1,13 @@
 package com.customer.CRM_Backend.service;
 
 import com.customer.CRM_Backend.entity.Customer;
-import com.customer.CRM_Backend.entity.CustomerStatus;
+import com.customer.CRM_Backend.exception.ResourceNotFoundException;
 import com.customer.CRM_Backend.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerService {
@@ -20,5 +23,15 @@ public class CustomerService {
        }
 
     }
+
+    public List<Customer> getAllCustomer() {
+        return repo.findAll();
+    }
+
+    public Customer getCustomerById(long id) {
+        return repo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
+    }
+
 
 }
